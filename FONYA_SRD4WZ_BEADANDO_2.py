@@ -16,6 +16,11 @@ def pi_prefix_fuggveny(p):
 
     return a
 
+def PIellentett(a,b):
+    a+=Ellentett(b)
+    PI=pi_prefix_fuggveny(a)
+    return PI[-1]
+
 def TransitionFunction(a,s):
     transition_function={}
     PI=[]
@@ -25,16 +30,10 @@ def TransitionFunction(a,s):
     for i in range(s):
         transition_function["s"+str(i)] = {}
     transition_function["s0"]= {a[0]:"s1", Ellentett(a[0]):"s0"}
-    for i in range(1,len(a)):
-        seged=transition_function['s0'][Ellentett(a[i])]
-        if((PI[i-1]>=PI[i])&sv is True): 
-            seged='s'+str(i)
-            sv=False
-        
+    for i in range(1,len(a)):     
+        seged='s'+str(PIellentett(a[:i],a[i]))
         transition_function["s"+str(i)]= {a[i]:"s"+str(i+1), Ellentett(a[i]):str(seged)}
     transition_function['s'+str(len(a))]={'a':'s'+str(len(a)),'b':'s'+str(len(a))}
-    print (PI)
-    print(transition_function)
     return transition_function
 
 def Ellentett(a):
@@ -47,7 +46,6 @@ G=False
 while G is False:
     a=input('Milyen (a,b) abc fölötti szót tartalmazó szavakat fogadjon el?\n')
     b= set(a)
-    print (b)
     if b!={'b','a'}: 
         print('Nem megfelelő a kritérium! Adj meg másikat!')
     else: G=True
@@ -75,4 +73,3 @@ print(dfa.accepts(szo))
 while szo!='':
     szo=input('Az előző feltételek alapján a vizsgálandó szó:\n')
     print(dfa.accepts(szo))
-
